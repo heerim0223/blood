@@ -2,10 +2,12 @@
 """
 Created on Mon Jul 25 17:02:53 2022
 
-@author: @author
+@author: 희토미la, wodns
+
+v1.0.0
 """
 
-import sys, time
+import sys, os, time
 from threading import Thread
 import chromedriver_autoinstaller
 from selenium import webdriver
@@ -17,6 +19,21 @@ from PyQt5.QtGui import QIcon, QCloseEvent
 
 
 
+def file_path(relative_path, bool=True):
+    if getattr(sys, 'frozen', False): # packaging
+        if bool:
+            APP_EXE_DIR = os.path.dirname(os.path.abspath(sys.executable))
+            return os.path.join(APP_EXE_DIR, relative_path)
+        else:
+            APP_DATA_DIR = sys._MEIPASS
+            return os.path.join(APP_DATA_DIR, relative_path)
+    else: # script
+        APP_EXE_DIR = os.path.dirname(os.path.abspath(__file__))
+        APP_DATA_DIR = APP_EXE_DIR
+        return os.path.join(APP_EXE_DIR, relative_path)
+
+
+
 class Ui_MainWindow(QWidget):
     def __init__(self):
         super().__init__()
@@ -24,7 +41,7 @@ class Ui_MainWindow(QWidget):
 
     def setupUi(self):
         self.setWindowTitle('헌혈 자가문진 매크로')
-        self.setWindowIcon(QIcon('icon.png'))
+        self.setWindowIcon(QIcon(file_path('icon.png', False)))
         # self.resize(300, 360)
         self.setFixedSize(300, 450) # 창 크기 고정
 
@@ -90,6 +107,7 @@ class Ui_MainWindow(QWidget):
         self.button.clicked.connect(self.button_clicked)
 
         self.show()
+        ''' tab order setting 필요 '''
 
     def button_clicked(self):
         croll = Thread(target=self.crolling, daemon=True)
@@ -105,6 +123,7 @@ class Ui_MainWindow(QWidget):
         chrome_ver = chromedriver_autoinstaller.get_chrome_version().split('.')[0]  #크롬드라이버 버전 확인
         options = webdriver.ChromeOptions()
         options.add_experimental_option('excludeSwitches', ['enable-logging'])
+        ''' chromedriver console hide 필요 '''
         try:
             self.driver = webdriver.Chrome(service=Service(f'./{chrome_ver}/chromedriver.exe'), options=options)
         except:
@@ -148,7 +167,7 @@ class Ui_MainWindow(QWidget):
             self.driver.find_element(By.XPATH, '//*[@id="area_agreement"]/div/div[1]/div[1]/label/span').click()
             # 제출하기 클릭
             self.driver.find_element(By.XPATH, '//*[@id="pageEnd"]/a[2]').click()
-    
+
             # emit4_save.do
             # Q01
             self.driver.find_element(By.XPATH, '//*[@id="surveyForm"]/div/div[1]/div[2]/div[1]/label/span').click()
@@ -200,7 +219,7 @@ class Ui_MainWindow(QWidget):
 
 
 
-if __name__=="__main__":
+if __name__ == "__main__":
     app = QApplication(sys.argv)
     ui = Ui_MainWindow()
-    app.exec() # PyQt5 UI 종료'
+    app.exec() # PyQt5 UI 종료
