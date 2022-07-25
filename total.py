@@ -2,7 +2,7 @@
 """
 Created on Mon Jul 25 17:02:53 2022
 
-@author: 희토미la
+@author: @author
 """
 
 import sys
