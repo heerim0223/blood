@@ -32,7 +32,7 @@ class Ui_MainWindow(QWidget):
 제작한 헌혈 자가문진 매크로입니다.
       
 ※ 주의사항 : 
-꼭 헌혈 자가문진의 모든 약간을 
+꼭 헌혈 자가문진의 모든 약관을 
 준수하시고 계신 분들만 이용하세요.
                                  """)
         
@@ -175,4 +175,4 @@ if __name__=="__main__":
     app = QApplication(sys.argv)
     ui = Ui_MainWindow()
     
-    sys.exit(app.exec_()) # PyQt5 UI 종료 
+    app.exec() # PyQt5 UI 종료 
