@@ -208,7 +208,7 @@ class Ui_MainWindow(QWidget):
             self.driver.find_element(By.XPATH, '//*[@id="surveyForm"]/div/div[1]/div[12]/div[1]/label/span').click()
             self.driver.find_element(By.XPATH, '//*[@id="surveyForm"]/div/div[1]/div[12]/div[2]/label/span').click()
             # Q07 지역 선택
-            #    |   1    |  2   | 3
+            #    |   1    |  2  | 3
             # 15 | 수도권 | 경북 | 경남
             # 16 | 충청   | 전라 | 강원/제주
             # ex) 강원/제주 //*[@id="surveyForm"]/div/div[1]/div[16]/div[3]/label/span
@@ -222,7 +222,7 @@ class Ui_MainWindow(QWidget):
                 self.driver.find_element(By.XPATH, '//*[@id="surveyForm"]/div/div[1]/div[16]/div[1]/label').click()
             elif combobox == 4: # 전라
                 self.driver.find_element(By.XPATH, '//*[@id="surveyForm"]/div/div[1]/div[16]/div[2]/label').click()
-            elif combobox == 5: # 강원/제
+            elif combobox == 5: # 강원/제주
                 self.driver.find_element(By.XPATH, '//*[@id="surveyForm"]/div/div[1]/div[16]/div[3]/label').click()
             # 제출하기 클릭
             self.driver.find_element(By.XPATH, '//*[@id="btn_submit"]')
