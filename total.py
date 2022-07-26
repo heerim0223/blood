@@ -4,7 +4,7 @@ Created on Mon Jul 25 17:02:53 2022
 
 @author: 희토미la, wodns
 
-v1.0.0
+v1.0.1
 """
 
 import sys, os, time
@@ -14,7 +14,7 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
-from PyQt5.QtWidgets import QLabel, QPushButton, QWidget, QApplication, QLineEdit, QComboBox
+from PyQt5.QtWidgets import QLabel, QPushButton, QWidget, QApplication, QLineEdit, QComboBox, QCheckBox
 from PyQt5.QtGui import QIcon, QCloseEvent
 
 
@@ -43,81 +43,103 @@ class Ui_MainWindow(QWidget):
         self.setWindowTitle('헌혈 자가문진 매크로')
         self.setWindowIcon(QIcon(file_path('icon.png', False)))
         # self.resize(300, 360)
-        self.setFixedSize(300, 450) # 창 크기 고정
+        self.setFixedSize(300, 475) # 창 크기 고정
 
         # 매크로 사용 설명서
-        self.text_label1 = QLabel(self)
-        self.text_label1.move(25, 5)
-        self.text_label1.setText(
+        self.text_readme = QLabel(self)
+        self.text_readme.move(25, 5)
+        self.text_readme.setText(
 """
 해당 프로그램은
 헌혈 자가문진을 귀찮아하시는 분들을 위해
 제작한 헌혈 자가문진 매크로입니다.
+"""
+        )
 
+        self.text_caution = QLabel(self)
+        self.text_caution.move(25, 60)
+        self.text_caution.setText(
+"""
 ※ 주의사항 : 
 꼭 헌혈 자가문진의 모든 약관을 
 준수하시고 계신 분들만 이용하세요.
 """
         )
+        self.text_caution.setStyleSheet('color: #f2484b; font-weight: bold;')
 
         # 이름 입력(XXX)
-        self.text_label1 = QLabel(self)
-        self.text_label1.move(25, 135)
-        self.text_label1.setText(' • 이름을 입력해주세요.')
+        self.text_name = QLabel(' • 이름을 입력해주세요.', self)
+        self.text_name.move(25, 135)
 
-        self.line_edit1 = QLineEdit(self)
-        self.line_edit1.move(25,155)
+        self.line_name = QLineEdit(self)
+        self.line_name.move(25,155)
 
         # 주민등록번호 앞자리 입력(123456)
-        self.text_label2 = QLabel(self)
-        self.text_label2.move(25, 195)
-        self.text_label2.setText(' • 주민등록번호 앞자리를 입력해주세요.')
+        self.text_front = QLabel(' • 주민등록번호 앞자리를 입력해주세요.', self)
+        self.text_front.move(25, 195)
 
-        self.line_edit2 = QLineEdit(self)
-        self.line_edit2.move(25,215)
+        self.line_front = QLineEdit(self)
+        self.line_front.move(25,215)
 
         # 주민등록번호 뒷자리 입력(*******)
-        self.text_label3 = QLabel(self)
-        self.text_label3.move(25, 255)
-        self.text_label3.setText(' • 주민등록번호 뒷자리를 입력해주세요.')
+        self.text_back = QLabel(' • 주민등록번호 뒷자리를 입력해주세요.', self)
+        self.text_back.move(25, 255)
 
-        self.line_edit3 = QLineEdit(self)
-        self.line_edit3.setEchoMode(QLineEdit.Password)
-        self.line_edit3.move(25,275)
-        ''' EchoMode on/off 추가 필요 '''
+        self.line_back = QLineEdit(self)
+        self.line_back.move(25,275)
+        self.line_back.setEchoMode(QLineEdit.EchoMode.Password)
 
-        # 지역 선택(수도권,경북,경남,충청,전라,강원/재주) 콤보박
-        self.text_label4 = QLabel(self)
-        self.text_label4.move(25, 315)
-        self.text_label4.setText(' • 지역을 선택해주세요.')
+        # 주민등록번호 보이기 선택
+        self.checkbox = QCheckBox('보이기', self)
+        self.checkbox.move(25, 300)
+        self.checkbox.setChecked(False)
+        self.checkbox.stateChanged.connect(self.checkbox_event)
+
+        # 지역 선택(수도권,경북,경남,충청,전라,강원/재주) 콤보박스
+        self.text_region = QLabel(' • 지역을 선택해주세요.', self)
+        self.text_region.move(25, 340)
 
         self.combobox = QComboBox(self)
+        self.combobox.move(25, 360)
         self.combobox.addItem('수도권') # index[0]
         self.combobox.addItem('경북') # index[1]
         self.combobox.addItem('경남') # index[2]
         self.combobox.addItem('충청') # index[3]
         self.combobox.addItem('전라') # index[4]
         self.combobox.addItem('강원/제주') # index[5]
-        self.combobox.move(25, 335)
 
         # 확인 버튼
-        self.button = QPushButton(self)
-        self.button.move(25, 400)
-        self.button.setText('확인')
-        self.button.clicked.connect(self.button_clicked)
+        self.button = QPushButton('확인', self)
+        self.button.move(25, 425)
+        self.button.resize(150, 25)
+        self.button.setAutoDefault(True)
+        self.button.clicked.connect(self.button_event)
+
+        # 탭 버튼 순서
+        self.setTabOrder(self.line_name, self.line_front)
+        self.setTabOrder(self.line_front, self.line_back)
+        self.setTabOrder(self.line_back, self.checkbox)
+        self.setTabOrder(self.checkbox, self.combobox)
+        self.setTabOrder(self.combobox, self.button)
+        self.setTabOrder(self.button, self.line_name)
 
         self.show()
-        ''' tab order setting 필요 '''
 
-    def button_clicked(self):
+    def checkbox_event(self):
+        if self.checkbox.isChecked():
+            self.line_back.setEchoMode(QLineEdit.EchoMode.Normal)
+        else:
+            self.line_back.setEchoMode(QLineEdit.EchoMode.Password)
+
+    def button_event(self):
         croll = Thread(target=self.crolling, daemon=True)
         croll.start()
         self.button.setDisabled(True)
 
     def crolling(self):
-        name = self.line_edit1.text() # 이름 파라미터 가져오기
-        jumin1 = self.line_edit2.text() # 주민등록번호 앞자리 파라미터 가져오기
-        jumin2 = self.line_edit3.text() # 주민등록번호 뒷자리 파라미터 가져오기
+        name = self.line_name.text() # 이름 파라미터 가져오기
+        jumin1 = self.line_front.text() # 주민등록번호 앞자리 파라미터 가져오기
+        jumin2 = self.line_back.text() # 주민등록번호 뒷자리 파라미터 가져오기
         combobox = self.combobox.currentIndex() # 콤보박스에서 선택된 항목의 Index 반환
 
         chrome_ver = chromedriver_autoinstaller.get_chrome_version().split('.')[0]  #크롬드라이버 버전 확인
@@ -142,11 +164,12 @@ class Ui_MainWindow(QWidget):
             self.driver.find_element(By.XPATH, '//*[@id="jumin1"]').send_keys(jumin1)
             self.driver.find_element(By.XPATH, '//*[@id="jumin2"]').send_keys(jumin2)
             self.driver.find_element(By.XPATH, '//*[@id="btn_start"]').click()
+            
+            ''' 문제 확인(뒷 페이지의 확인 안눌림) '''
             # 이미 자가문진을 했다면 종료
-            if self.driver.find_element(By.XPATH, '//*[@id="btn_exit"]'):
-                self.driver.find_element(By.XPATH, '//*[@id="btn_exit"]').click()
-                ''' 종료 후 ui 처리 필요 '''
-
+            #if self.driver.find_element(By.XPATH, '//*[@id="btn_exit"]'):
+            #    self.driver.find_element(By.XPATH, '//*[@id="btn_exit"]').click()
+            #    ''' 종료 후 ui 처리 필요 '''
             ''' 팝업에 대한 처리 필요 '''
 
             # 자가문진 자동 클릭
