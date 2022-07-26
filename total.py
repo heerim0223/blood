@@ -165,7 +165,7 @@ class Ui_MainWindow(QWidget):
             self.driver.find_element(By.XPATH, '//*[@id="jumin2"]').send_keys(jumin2)
             self.driver.find_element(By.XPATH, '//*[@id="btn_start"]').click()
             
-            ''' 문제 확인(뒷 페이지의 확인 안눌림) '''
+            ''' 문제 확인 (뒷 페이지의 확인 안눌림) '''
             # 이미 자가문진을 했다면 종료
             #if self.driver.find_element(By.XPATH, '//*[@id="btn_exit"]'):
             #    self.driver.find_element(By.XPATH, '//*[@id="btn_exit"]').click()
@@ -226,8 +226,8 @@ class Ui_MainWindow(QWidget):
                 self.driver.find_element(By.XPATH, '//*[@id="surveyForm"]/div/div[1]/div[16]/div[3]/label').click()
             # 제출하기 클릭
             self.driver.find_element(By.XPATH, '//*[@id="btn_submit"]')
-        except:
-            pass
+        except Exception as e:
+            print(e)
         finally:
             self.driver.quit()
             self.button.setEnabled(True)
