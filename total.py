@@ -157,13 +157,14 @@ class Ui_MainWindow(QWidget):
         # 크롬 드라이버로 url(자가문진) 열기
         URL = "https://www.bloodinfo.net/emi2/go_emi4_login_page.do?lang=ko"
         self.driver.get(URL)
-        time.sleep(0.1) # 안정화 필요
+        time.sleep(4) # 안정화 필요
         try:
             # 개인 정보 자동 입력 및 확인 버튼 클릭
             self.driver.find_element(By.XPATH, '//*[@id="name"]').send_keys(name)
             self.driver.find_element(By.XPATH, '//*[@id="jumin1"]').send_keys(jumin1)
             self.driver.find_element(By.XPATH, '//*[@id="jumin2"]').send_keys(jumin2)
             self.driver.find_element(By.XPATH, '//*[@id="btn_start"]').click()
+            time.sleep(4) # 안정화 필요
             
             ''' 문제 확인 (뒷 페이지의 확인 안눌림) '''
             # 이미 자가문진을 했다면 종료
@@ -175,6 +176,7 @@ class Ui_MainWindow(QWidget):
             # 자가문진 자동 클릭
             # 확인 클릭
             self.driver.find_element(By.XPATH, '//*[@id="btn_next"]').click()
+            time.sleep(4) # 안정화 필요
 
             # emi4_document.do
             # 안내문 동의 클릭
@@ -182,6 +184,8 @@ class Ui_MainWindow(QWidget):
                 self.driver.find_element(By.XPATH, '/html/body/div/div[2]/div/div/div[1]/div[1]/div['+ str(i) +']/div/label/span').click()
             # 다음 클릭
             self.driver.find_element(By.XPATH, '//*[@id="btn_next2"]').click()
+            time.sleep(4) # 안정화 필요
+            
             # emi4_quesiton.do
             # 해당없음(다음으로 이동) 클릭
             for i in range(1,12):
@@ -190,6 +194,7 @@ class Ui_MainWindow(QWidget):
             self.driver.find_element(By.XPATH, '//*[@id="area_agreement"]/div/div[1]/div[1]/label/span').click()
             # 제출하기 클릭
             self.driver.find_element(By.XPATH, '//*[@id="pageEnd"]/a[2]').click()
+            time.sleep(4) # 안정화 필요
 
             # emit4_save.do
             # Q01
