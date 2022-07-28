@@ -230,13 +230,26 @@ class Ui_MainWindow(QWidget):
         # 크롬 드라이버로 url(자가문진) 열기
         URL = "https://www.bloodinfo.net/emi2/go_emi4_login_page.do?lang=ko"
         self.driver.get(URL)
+<<<<<<< HEAD
+=======
+        time.sleep(4) # 안정화 필요
+>>>>>>> 9bde74bba261a0020c759173e1a643ce4b30365c
         try:
             wait.until(EC.element_to_be_clickable((By.XPATH, '//*[@id="name"]'))).send_keys(name)
             wait.until(EC.element_to_be_clickable((By.XPATH, '//*[@id="jumin1"]'))).send_keys(jumin1)
             wait.until(EC.element_to_be_clickable((By.XPATH, '//*[@id="jumin2"]'))).send_keys(jumin2)
             wait.until(EC.element_to_be_clickable((By.XPATH, '//*[@id="btn_start"]'))).click()
             # 개인 정보 자동 입력 및 확인 버튼 클릭
+<<<<<<< HEAD
 
+=======
+            self.driver.find_element(By.XPATH, '//*[@id="name"]').send_keys(name)
+            self.driver.find_element(By.XPATH, '//*[@id="jumin1"]').send_keys(jumin1)
+            self.driver.find_element(By.XPATH, '//*[@id="jumin2"]').send_keys(jumin2)
+            self.driver.find_element(By.XPATH, '//*[@id="btn_start"]').click()
+            time.sleep(4) # 안정화 필요
+            
+>>>>>>> 9bde74bba261a0020c759173e1a643ce4b30365c
             ''' 문제 확인 (뒷 페이지의 확인 안눌림) '''
             # 이미 자가문진을 했다면 종료
             #if self.driver.find_element(By.XPATH, '//*[@id="btn_exit"]'):
@@ -246,14 +259,25 @@ class Ui_MainWindow(QWidget):
 
             # 자가문진 자동 클릭
             # 확인 클릭
+<<<<<<< HEAD
             wait.until(EC.element_to_be_clickable((By.XPATH, '//*[@id="btn_next"]'))).click()
+=======
+            self.driver.find_element(By.XPATH, '//*[@id="btn_next"]').click()
+            time.sleep(4) # 안정화 필요
+>>>>>>> 9bde74bba261a0020c759173e1a643ce4b30365c
 
             # emi4_document.do
             # 안내문 동의 클릭
             for i in range(2,7):
                 wait.until(EC.element_to_be_clickable((By.XPATH, '/html/body/div/div[2]/div/div/div[1]/div[1]/div['+ str(i) +']/div/label/span'))).click()
             # 다음 클릭
+<<<<<<< HEAD
             wait.until(EC.element_to_be_clickable((By.XPATH, '//*[@id="btn_next2"]'))).click()
+=======
+            self.driver.find_element(By.XPATH, '//*[@id="btn_next2"]').click()
+            time.sleep(4) # 안정화 필요
+            
+>>>>>>> 9bde74bba261a0020c759173e1a643ce4b30365c
             # emi4_quesiton.do
             # 해당없음(다음으로 이동) 클릭
             for i in range(1,12):
@@ -272,7 +296,12 @@ class Ui_MainWindow(QWidget):
             time.sleep(5) # 데이터 처리 시간 필요 (줄일 수 있다면 줄이는게 좋음)
             ''' 다른 방법 모색 '''
             # 제출하기 클릭
+<<<<<<< HEAD
             wait.until(EC.element_to_be_clickable((By.XPATH, '//*[@id="pageEnd"]/a[2]'))).click() # 데이터 처리 안될 시 alert 발생
+=======
+            self.driver.find_element(By.XPATH, '//*[@id="pageEnd"]/a[2]').click()
+            time.sleep(4) # 안정화 필요
+>>>>>>> 9bde74bba261a0020c759173e1a643ce4b30365c
 
             # emit4_save.do
             # Q01
