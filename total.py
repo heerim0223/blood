@@ -4,7 +4,7 @@ Created on Mon Jul 25 17:02:53 2022
 
 @author: 희토미la, wodns
 
-v1.0.1
+v1.1.0
 """
 
 import sys, os, time
