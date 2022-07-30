@@ -7,7 +7,7 @@
 >
 > 이 프로그램은 단순히 매크로 기능만을 담고 있습니다. blod_v1.0.0.exe는 사용자가 기존의 헌혈 자가문진보다 손쉽게 자가문진을 할 수 있는 기능이 구현되어 있습니다.
 
-![화면 캡처 2022-07-26 000219](https://user-images.githubusercontent.com/74406700/180809649-93751fe5-e07a-4b6a-8493-ccf80826f4cb.png)
+![image](https://user-images.githubusercontent.com/74406700/181902894-bad896f6-3a8d-4010-a039-4c3cb5af3c20.png)
 
 ## 헌혈 자가문진 매크로 실행 설명
 
