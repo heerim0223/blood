@@ -4,7 +4,7 @@ Created on Mon Jul 25 17:02:53 2022
 
 @author: 희토미la, wodns
 
-v1.1.0
+v1.1.1
 """
 
 import sys, os, time
@@ -95,6 +95,7 @@ class Ui_MainWindow(QWidget):
         self.line_back.move(25,275)
         self.line_back.setEchoMode(QLineEdit.EchoMode.Password)
         self.line_back.setValidator(QRegExpValidator(QRegExp('[1-8]\d{6}'))) # 주민번호 뒷자리 표현
+        self.line_back.textChanged.connect(self.back_event)
 
         # 주민등록번호 보이기 선택
         self.checkbox_jumin = QCheckBox('보이기', self)
@@ -177,6 +178,11 @@ class Ui_MainWindow(QWidget):
     def front_event(self):
         if len(self.line_front.text()) == 6:
             self.line_back.setFocus()
+            
+
+    def back_event(self):
+        if len(self.line_back.text()) == 7:
+            self.button.setFocus()
 
     def checkbox_event(self):
         if self.checkbox_jumin.isChecked():
@@ -220,7 +226,6 @@ class Ui_MainWindow(QWidget):
         chrome_ver = chromedriver_autoinstaller.get_chrome_version().split('.')[0]  #크롬드라이버 버전 확인
         options = webdriver.ChromeOptions()
         options.add_experimental_option('excludeSwitches', ['enable-logging'])
-        # options.set_capability('unhandledPromptBehavior', 'accept') # alert 처리 옵션
         ''' chromedriver console hide 필요 '''
         try:
             self.driver = webdriver.Chrome(service=Service(f'./{chrome_ver}/chromedriver.exe'), options=options)
@@ -242,12 +247,7 @@ class Ui_MainWindow(QWidget):
             wait.until(EC.element_to_be_clickable((By.XPATH, '//*[@id="btn_start"]'))).click()
             # 개인 정보 자동 입력 및 확인 버튼 클릭
 
-            ''' 문제 확인 (뒷 페이지의 확인 안눌림) '''
-            # 이미 자가문진을 했다면 종료
-            #if self.driver.find_element(By.XPATH, '//*[@id="btn_exit"]'):
-            #    self.driver.find_element(By.XPATH, '//*[@id="btn_exit"]').click()
-            #    ''' 종료 후 ui 처리 필요 '''
-            ''' 팝업에 대한 처리 필요 (없어도 알아서 종료되긴 함) '''
+            ''' 팝업에 대한 처리 필요 (alert) '''
 
             # 자가문진 자동 클릭
             # 확인 클릭
