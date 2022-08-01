@@ -85,6 +85,7 @@ class Ui_MainWindow(QWidget):
         self.line_front = QLineEdit(self)
         self.line_front.move(25,215)
         self.line_front.setValidator(QRegExpValidator(QRegExp('\d{2}([0]\d|[1][0-2])([0][1-9]|[1-2]\d|[3][0-1])'))) # 생년월일 표현
+        self.line_front.textChanged.connect(self.front_event)
 
         # 주민등록번호 뒷자리 입력(*******)
         label_back = QLabel(' • 주민등록번호 뒷자리를 입력해주세요.', self)
@@ -172,6 +173,10 @@ class Ui_MainWindow(QWidget):
         self.setTabOrder(self.button, self.line_name)
 
         self.show()
+
+    def front_event(self):
+        if len(self.line_front.text()) == 6:
+            self.line_back.setFocus()
 
     def checkbox_event(self):
         if self.checkbox_jumin.isChecked():
