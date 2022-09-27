@@ -15,7 +15,7 @@
 >
 > 이 프로그램은 단순히 매크로 기능만을 담고 있습니다. blod_v1.1.1.exe는 사용자가 기존의 헌혈 자가문진보다 손쉽게 자가문진을 할 수 있는 기능이 구현되어 있습니다.
 
-![image](https://user-images.githubusercontent.com/74406700/181902894-bad896f6-3a8d-4010-a039-4c3cb5af3c20.png)
+![제목 없음-1](https://user-images.githubusercontent.com/74406700/192427376-1c0b042a-0e17-4c99-a71a-2af2f86e9ac6.png)
 
 [blood_v1.1.1.exe](https://github.com/heerim0223/blood/tags)
 
