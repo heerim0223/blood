@@ -54,8 +54,8 @@ class Ui_MainWindow(QWidget):
 헌혈 자가문진을 귀찮아하시는 분들을 위해
 제작한 헌혈 자가문진 매크로입니다.
 
-※ 주의사항 : 
-꼭 헌혈 자가문진의 모든 약관을 
+※ 주의사항 :
+꼭 헌혈 자가문진의 모든 약관을
 준수하시고 계신 분들만 이용하세요.
 """
         )
@@ -108,6 +108,7 @@ class Ui_MainWindow(QWidget):
 
         self.show()
         ''' tab order setting 필요 '''
+        ''' btn setDefault 필요 '''
 
     def button_clicked(self):
         croll = Thread(target=self.crolling, daemon=True)
@@ -215,7 +216,8 @@ class Ui_MainWindow(QWidget):
             self.driver.quit()
         except AttributeError:
             pass
-        QCloseEvent.accept()
+        finally:
+            QCloseEvent.accept()
 
 
 
